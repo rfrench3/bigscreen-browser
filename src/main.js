@@ -6,6 +6,10 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+// Enable Widevine DRM support
+app.commandLine.appendSwitch('widevine-cdm-path', path.join(__dirname, 'widevine'));
+app.commandLine.appendSwitch('widevine-cdm-version', '4.10.2710.0'); // Use appropriate version
+
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -16,8 +20,9 @@ const createWindow = () => {
     },
   });
 
-  // and load the index.html of the app.
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  // Load your DRM-protected website instead of the local HTML
+  // TODO: load a main page that lets you select from a list of different websites
+  mainWindow.loadURL('https://netflix.com');
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
